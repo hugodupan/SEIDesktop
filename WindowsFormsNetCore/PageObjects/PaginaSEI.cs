@@ -18,13 +18,14 @@ namespace SEI.Desktop.PageObjects
             _appSettings = appSettings;
 
             var chromeOptions = new ChromeOptions();
-            chromeOptions.AddArgument("--headless");
+            //chromeOptions.AddArgument("--headless");
 
-            _driver = new ChromeDriver(appSettings.CaminhoChromeDriver, chromeOptions);
+            //_driver = new ChromeDriver(appSettings.CaminhoChromeDriver, chromeOptions);
+            _driver = new ChromeDriver(System.Reflection.Assembly.GetExecutingAssembly().Location.Split("SEIDesktop.dll")[0], chromeOptions);
         }
         public void CarregarPaginaInicial()
         {
-            _driver.LoadPage(TimeSpan.FromSeconds(60), _appSettings.CaminhoChromeDriver);
+            _driver.LoadPage(TimeSpan.FromSeconds(60), _appSettings.UrlPaginaSEI);
         }
         public void EfetuarLogin()
         {
@@ -100,6 +101,7 @@ namespace SEI.Desktop.PageObjects
         {
             var jaFoiCredenciado = false;
 
+            Thread.Sleep(500);
             _driver.SwitchTo().Frame("ifrVisualizacao").ClickElement(By.CssSelector("#divArvoreAcoes > a:nth-child(2) > img"));
 
             while (!jaFoiCredenciado)
