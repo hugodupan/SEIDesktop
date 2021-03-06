@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="PageObjects\" />
     <Folder Include="Repositories\" />
   </ItemGroup>
 
