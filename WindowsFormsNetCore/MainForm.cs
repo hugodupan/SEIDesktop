@@ -51,20 +51,32 @@ namespace SEI.Desktop
                 return;
             }
 
-            //2626489
+            button1.Enabled = false;
 
             var matricula = textBoxMatricula.Text.Trim().ToLower();
             var marcador = comboBoxMarcador.Text.Trim().ToLower();
             var quantidade = textBoxQuantidade.Text.Trim().ToLower();
 
-            DistribuirProcessos(matricula, marcador, quantidade);
+            try
+            {
+                DistribuirProcessos(matricula, marcador, quantidade);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                button1.Enabled = true;
 
+            }
         }
 
         private void DistribuirProcessos(string matricula, string marcador, string quantidade)
         {
 
             var paginaSEI = new PaginaSEI(_settings);
+            var marcadorASerEnviado = "roxo";
 
             try
             {
@@ -88,9 +100,9 @@ namespace SEI.Desktop
 
                     paginaSEI.Credenciar(matricula);
 
-                    if (!marcador.Contains("marcador_amarelo"))
+                    if (!marcador.Contains("amarelo"))
                     {
-                        //paginaSEI.EnviarParaMarcador(marcadorASerEnviado);
+                        paginaSEI.EnviarParaMarcador(marcadorASerEnviado);
                     }
 
                     paginaSEI.Descredenciar();
@@ -98,14 +110,13 @@ namespace SEI.Desktop
                     paginaSEI.IrParaControleProcessos();
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception)
             {
                 throw;
             }
             finally
             {
                 paginaSEI.Fechar();
-
             }
         }
     }
