@@ -18,7 +18,7 @@ namespace SEI.Desktop.PageObjects
             _appSettings = appSettings;
 
             var chromeOptions = new ChromeOptions();
-            //chromeOptions.AddArgument("--headless");
+            chromeOptions.AddArgument("--headless");
 
             //_driver = new ChromeDriver(appSettings.CaminhoChromeDriver, chromeOptions);
             _driver = new ChromeDriver(System.Reflection.Assembly.GetExecutingAssembly().Location.Split("SEIDesktop.dll")[0], chromeOptions);

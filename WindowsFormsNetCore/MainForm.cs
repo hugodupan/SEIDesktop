@@ -24,6 +24,7 @@ namespace SEI.Desktop
 
         private void button1_Click(object sender, EventArgs e)
         {
+
             if (string.IsNullOrEmpty(textBoxMatricula.Text))
             {
                 MessageBox.Show("Matricula é obrigatória!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -57,13 +58,19 @@ namespace SEI.Desktop
             var marcador = comboBoxMarcador.Text.Trim().ToLower();
             var quantidade = textBoxQuantidade.Text.Trim().ToLower();
 
+            progressBar1.Maximum = int.Parse(quantidade) + 1;
+            progressBar1.Minimum = 0;
+            progressBar1.Value = 0;
+
+
             try
             {
                 DistribuirProcessos(matricula, marcador, quantidade);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                MessageBox.Show("Houve um erro. Tente novamente. Erro:" + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             finally
             {
@@ -77,6 +84,8 @@ namespace SEI.Desktop
 
             var paginaSEI = new PaginaSEI(_settings);
             var marcadorASerEnviado = "roxo";
+            progressBar1.Value = 1;
+
 
             try
             {
@@ -108,6 +117,10 @@ namespace SEI.Desktop
                     paginaSEI.Descredenciar();
 
                     paginaSEI.IrParaControleProcessos();
+
+                    progressBar1.Value += 1;
+
+
                 }
             }
             catch (Exception)
