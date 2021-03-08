@@ -58,24 +58,25 @@ namespace SEI.Desktop
             var marcador = comboBoxMarcador.Text.Trim().ToLower();
             var quantidade = textBoxQuantidade.Text.Trim().ToLower();
 
-            progressBar1.Maximum = int.Parse(quantidade) + 1;
+            progressBar1.Maximum = int.Parse(quantidade);
             progressBar1.Minimum = 0;
-            progressBar1.Value = 0;
+            label4.Text = "0/0";
 
 
             try
             {
                 DistribuirProcessos(matricula, marcador, quantidade);
+                MessageBox.Show("Processo finalizado com sucesso!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Houve um erro. Tente novamente. Erro:" + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
             }
             finally
             {
                 button1.Enabled = true;
-
+                label4.Text = "0/0";
+                progressBar1.Value = 0;
             }
         }
 
@@ -84,8 +85,7 @@ namespace SEI.Desktop
 
             var paginaSEI = new PaginaSEI(_settings);
             var marcadorASerEnviado = "roxo";
-            progressBar1.Value = 1;
-
+            label4.Text = progressBar1.Value + "/" + quantidade;
 
             try
             {
@@ -97,6 +97,8 @@ namespace SEI.Desktop
 
                 for (int i = 1; i <= int.Parse(quantidade); i++)
                 {
+                    progressBar1.Value = i;
+
                     paginaSEI.VerPorMarcadores();
 
                     var qtdProcessosExistentes = paginaSEI.DetalharProcessosPorMarcador(marcador);
@@ -118,9 +120,7 @@ namespace SEI.Desktop
 
                     paginaSEI.IrParaControleProcessos();
 
-                    progressBar1.Value += 1;
-
-
+                    label4.Text = i + "/" + quantidade;
                 }
             }
             catch (Exception)
