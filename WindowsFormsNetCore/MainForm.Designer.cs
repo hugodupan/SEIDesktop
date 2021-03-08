@@ -34,15 +34,21 @@
             this.comboBoxMarcador = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxQuantidade = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.label4 = new System.Windows.Forms.Label();
+            this.botaoDistribuir = new System.Windows.Forms.Button();
+            this.progressBar = new System.Windows.Forms.ProgressBar();
+            this.labelProgress = new System.Windows.Forms.Label();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            this.labelProcessando = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 54);
+            this.label1.Location = new System.Drawing.Point(76, 69);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 15);
             this.label1.TabIndex = 0;
@@ -50,16 +56,16 @@
             // 
             // textBoxMatricula
             // 
-            this.textBoxMatricula.Location = new System.Drawing.Point(78, 50);
+            this.textBoxMatricula.Location = new System.Drawing.Point(142, 65);
             this.textBoxMatricula.Name = "textBoxMatricula";
             this.textBoxMatricula.Size = new System.Drawing.Size(100, 23);
             this.textBoxMatricula.TabIndex = 1;
-            this.textBoxMatricula.Text = "2626489";
+            this.textBoxMatricula.Text = "14306891";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(184, 54);
+            this.label2.Location = new System.Drawing.Point(248, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 15);
             this.label2.TabIndex = 2;
@@ -72,7 +78,7 @@
             "Amarelo",
             "Azul",
             "Verde"});
-            this.comboBoxMarcador.Location = new System.Drawing.Point(251, 50);
+            this.comboBoxMarcador.Location = new System.Drawing.Point(315, 65);
             this.comboBoxMarcador.Name = "comboBoxMarcador";
             this.comboBoxMarcador.Size = new System.Drawing.Size(121, 23);
             this.comboBoxMarcador.TabIndex = 3;
@@ -81,7 +87,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(378, 54);
+            this.label3.Location = new System.Drawing.Point(442, 69);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 15);
             this.label3.TabIndex = 4;
@@ -89,48 +95,101 @@
             // 
             // textBoxQuantidade
             // 
-            this.textBoxQuantidade.Location = new System.Drawing.Point(456, 51);
+            this.textBoxQuantidade.Location = new System.Drawing.Point(520, 66);
             this.textBoxQuantidade.Name = "textBoxQuantidade";
             this.textBoxQuantidade.Size = new System.Drawing.Size(100, 23);
             this.textBoxQuantidade.TabIndex = 5;
             this.textBoxQuantidade.Text = "1";
             // 
-            // button1
+            // botaoDistribuir
             // 
-            this.button1.Location = new System.Drawing.Point(562, 51);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Distribuir";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.botaoDistribuir.Location = new System.Drawing.Point(626, 66);
+            this.botaoDistribuir.Name = "botaoDistribuir";
+            this.botaoDistribuir.Size = new System.Drawing.Size(75, 23);
+            this.botaoDistribuir.TabIndex = 6;
+            this.botaoDistribuir.Text = "Distribuir";
+            this.botaoDistribuir.UseVisualStyleBackColor = true;
+            this.botaoDistribuir.Click += new System.EventHandler(this.button1_Click);
             // 
-            // progressBar1
+            // progressBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 12);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(776, 23);
-            this.progressBar1.TabIndex = 7;
+            this.progressBar.Location = new System.Drawing.Point(12, 12);
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Size = new System.Drawing.Size(776, 23);
+            this.progressBar.TabIndex = 7;
             // 
-            // label4
+            // labelProgress
             // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.label4.Location = new System.Drawing.Point(388, 16);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 15);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "0/0";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelProgress.AutoSize = true;
+            this.labelProgress.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.labelProgress.Location = new System.Drawing.Point(388, 16);
+            this.labelProgress.Name = "labelProgress";
+            this.labelProgress.Size = new System.Drawing.Size(24, 15);
+            this.labelProgress.TabIndex = 8;
+            this.labelProgress.Text = "0/0";
+            this.labelProgress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // listView1
+            // 
+            this.listView1.AllowColumnReorder = true;
+            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            this.listView1.FullRowSelect = true;
+            this.listView1.GridLines = true;
+            this.listView1.HideSelection = false;
+            this.listView1.Location = new System.Drawing.Point(87, 140);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(604, 218);
+            this.listView1.TabIndex = 9;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Registro";
+            this.columnHeader1.Width = 150;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Matricula";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader2.Width = 150;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Marcador";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader3.Width = 150;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Quantidade";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 150;
+            // 
+            // labelProcessando
+            // 
+            this.labelProcessando.AutoSize = true;
+            this.labelProcessando.Location = new System.Drawing.Point(12, 38);
+            this.labelProcessando.Name = "labelProcessando";
+            this.labelProcessando.Size = new System.Drawing.Size(89, 15);
+            this.labelProcessando.TabIndex = 10;
+            this.labelProcessando.Text = "Processando.....";
+            this.labelProcessando.Visible = false;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.progressBar1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.labelProcessando);
+            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.labelProgress);
+            this.Controls.Add(this.progressBar);
+            this.Controls.Add(this.botaoDistribuir);
             this.Controls.Add(this.textBoxQuantidade);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.comboBoxMarcador);
@@ -153,9 +212,15 @@
         private System.Windows.Forms.ComboBox comboBoxMarcador;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBoxQuantidade;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ProgressBar progressBar1;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button botaoDistribuir;
+        private System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.Label labelProgress;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.Label labelProcessando;
     }
 }
 

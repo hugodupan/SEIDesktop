@@ -52,32 +52,46 @@ namespace SEI.Desktop
                 return;
             }
 
-            button1.Enabled = false;
-
             var matricula = textBoxMatricula.Text.Trim().ToLower();
             var marcador = comboBoxMarcador.Text.Trim().ToLower();
             var quantidade = textBoxQuantidade.Text.Trim().ToLower();
 
-            progressBar1.Maximum = int.Parse(quantidade);
-            progressBar1.Minimum = 0;
-            label4.Text = "0/0";
-
+            InicializarComponentes(true, quantidade);
 
             try
             {
                 DistribuirProcessos(matricula, marcador, quantidade);
                 MessageBox.Show("Processo finalizado com sucesso!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Houve um erro. Tente novamente. Erro:" + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Houve um erro. Tente novamente. Erro:" + ex.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
             finally
             {
-                button1.Enabled = true;
-                label4.Text = "0/0";
-                progressBar1.Value = 0;
+                InicializarComponentes(false, "0");
+
             }
+        }
+
+        private void InicializarComponentes(bool iniciar, string quantidade)
+        {
+            labelProgress.Text = "0/0";
+            progressBar.Value = 0;
+            progressBar.Maximum = int.Parse(quantidade);
+            progressBar.Minimum = 0;
+
+            if (iniciar)
+            {
+                botaoDistribuir.Enabled = false;
+                labelProcessando.Visible = true;
+            }
+            else
+            {
+                botaoDistribuir.Enabled = true;
+                labelProcessando.Visible = false;
+            }
+
         }
 
         private void DistribuirProcessos(string matricula, string marcador, string quantidade)
@@ -85,7 +99,7 @@ namespace SEI.Desktop
 
             var paginaSEI = new PaginaSEI(_settings);
             var marcadorASerEnviado = "roxo";
-            label4.Text = progressBar1.Value + "/" + quantidade;
+            labelProgress.Text = progressBar.Value + "/" + quantidade;
 
             try
             {
@@ -97,8 +111,6 @@ namespace SEI.Desktop
 
                 for (int i = 1; i <= int.Parse(quantidade); i++)
                 {
-                    progressBar1.Value = i;
-
                     paginaSEI.VerPorMarcadores();
 
                     var qtdProcessosExistentes = paginaSEI.DetalharProcessosPorMarcador(marcador);
@@ -120,8 +132,14 @@ namespace SEI.Desktop
 
                     paginaSEI.IrParaControleProcessos();
 
-                    label4.Text = i + "/" + quantidade;
+                    labelProgress.Text = i + "/" + quantidade;
+                    progressBar.Value = i;
                 }
+
+                var row = new string[] { DateTime.Now.ToString(), matricula, marcador, quantidade };
+                var lvi = new ListViewItem(row);
+                //lvi.Tag
+                listView1.Items.Add(lvi);
             }
             catch (Exception)
             {

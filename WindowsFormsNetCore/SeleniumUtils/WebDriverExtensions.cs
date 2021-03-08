@@ -47,11 +47,14 @@ namespace SEI.Desktop.SeleniumUtils
 
         public static void ClosePopUp(this IWebDriver webDriver)
         {
-            var popUp = webDriver.SwitchTo().Window(webDriver.WindowHandles[1]);
-
-            if (popUp != null)
+            if (webDriver.WindowHandles.Count > 1)
             {
-                popUp.Close();
+                var popUp = webDriver.SwitchTo().Window(webDriver.WindowHandles[1]);
+
+                if (popUp != null)
+                {
+                    popUp.Close();
+                }
             }
 
             webDriver.SwitchTo().Window(webDriver.WindowHandles[0]);

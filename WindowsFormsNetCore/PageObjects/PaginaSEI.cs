@@ -86,6 +86,12 @@ namespace SEI.Desktop.PageObjects
         }
         public void Autenticar()
         {
+
+            if (_driver.WindowHandles.Count == 1)
+            {
+                throw new Exception("Erro: Verifique se o processo mais antigo é sigiloso\\restrito.");
+            }
+
             var popUpAutenticacao = _driver.SwitchTo().Window(_driver.WindowHandles[1]);
 
             if (popUpAutenticacao != null)
