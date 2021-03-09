@@ -44,11 +44,19 @@ namespace SEI.Desktop.PageObjects
         {
             if (quantidadeProcessos >= 200 && quantidadeProcessos <= 300)
             {
-                _driver.ClickElement(By.Id("lnkRecebidosProximaPaginaSuperior"));
+
+                if (_driver.IsElementPresent(By.Id("lnkRecebidosProximaPaginaSuperior")))
+                {
+                    _driver.ClickElement(By.Id("lnkRecebidosProximaPaginaSuperior"));
+                }
+
             }
             else if (quantidadeProcessos > 300)
             {
-                _driver.ClickElement(By.Id("lnkRecebidosUltimaPaginaSuperior"));
+                if (_driver.IsElementPresent(By.Id("lnkRecebidosUltimaPaginaSuperior")))
+                {
+                    _driver.ClickElement(By.Id("lnkRecebidosUltimaPaginaSuperior"));
+                }
             }
         }
         public void IrParaControleProcessos()

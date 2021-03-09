@@ -74,5 +74,18 @@ namespace SEI.Desktop.SeleniumUtils
             js.ExecuteScript($"return document.getElementById('{webElement.GetAttribute("id")}').value = '{value}';");
         }
 
+        public static bool IsElementPresent(this IWebDriver webDriver, By by)
+        {
+            try
+            {
+                webDriver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
+
     }
 }
