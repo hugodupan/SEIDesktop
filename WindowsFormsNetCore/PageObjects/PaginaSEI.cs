@@ -13,15 +13,27 @@ namespace SEI.Desktop.PageObjects
         private readonly AppSettings _appSettings;
         private IWebDriver _driver;
 
-        public PaginaSEI(AppSettings appSettings)
+        public PaginaSEI(AppSettings appSettings, bool visualizarNoNavegador)
         {
             _appSettings = appSettings;
 
             var chromeOptions = new ChromeOptions();
-            chromeOptions.AddArgument("--headless");
+            chromeOptions.AddArgument("--log-level=3");
+            chromeOptions.AddArgument("--disable-extensions");
+            chromeOptions.AddArgument("test-type");
+            chromeOptions.AddArgument("--ignore-certificate-errors");
+            chromeOptions.AddArgument("no-sandbox");
+
+            if (!visualizarNoNavegador)
+            {
+                chromeOptions.AddArgument("--headless");
+            }
+
+            var driverService = ChromeDriverService.CreateDefaultService(System.Reflection.Assembly.GetExecutingAssembly().Location.Split("SEIDesktop.dll")[0]);
+            driverService.HideCommandPromptWindow = true;
 
             //_driver = new ChromeDriver(appSettings.CaminhoChromeDriver, chromeOptions);
-            _driver = new ChromeDriver(System.Reflection.Assembly.GetExecutingAssembly().Location.Split("SEIDesktop.dll")[0], chromeOptions);
+            _driver = new ChromeDriver(driverService, chromeOptions);
         }
         public void CarregarPaginaInicial()
         {

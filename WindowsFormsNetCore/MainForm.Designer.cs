@@ -45,6 +45,7 @@
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.labelProcessando = new System.Windows.Forms.Label();
             this.comboBoxMatricula = new System.Windows.Forms.ComboBox();
+            this.checkBoxVerNavegador = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -187,11 +188,22 @@
             this.comboBoxMatricula.TabIndex = 11;
             this.comboBoxMatricula.TextUpdate += new System.EventHandler(this.comboBoxMatricula_TextUpdate);
             // 
+            // checkBox1
+            // 
+            this.checkBoxVerNavegador.AutoSize = true;
+            this.checkBoxVerNavegador.Location = new System.Drawing.Point(685, 41);
+            this.checkBoxVerNavegador.Name = "checkBox1";
+            this.checkBoxVerNavegador.Size = new System.Drawing.Size(108, 19);
+            this.checkBoxVerNavegador.TabIndex = 12;
+            this.checkBoxVerNavegador.Text = "Ver Navegador?";
+            this.checkBoxVerNavegador.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.checkBoxVerNavegador);
             this.Controls.Add(this.comboBoxMatricula);
             this.Controls.Add(this.labelProcessando);
             this.Controls.Add(this.listView1);
@@ -231,6 +243,7 @@
         private System.Windows.Forms.Label labelProcessando;
         private System.Windows.Forms.ComboBox comboBoxMatricula;
         private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.CheckBox checkBoxVerNavegador;
     }
 }
 

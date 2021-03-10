@@ -112,7 +112,7 @@ namespace SEI.Desktop
         private void DistribuirProcessos(string matricula, string nome, string marcador, string quantidade)
         {
 
-            var paginaSEI = new PaginaSEI(_settings);
+            var paginaSEI = new PaginaSEI(_settings, checkBoxVerNavegador.Checked);
             var marcadorASerEnviado = "roxo";
             labelProgress.Text = progressBar.Value + "/" + quantidade;
 
