@@ -16,6 +16,7 @@ namespace SEI.Desktop
         private readonly ISampleService _sampleService;
         private readonly AppSettings _settings;
         private List<Perito> _listaPeritos;
+        private List<string> _listaMarcadores;
 
         public MainForm(IServiceProvider serviceProvider, ISampleService sampleService, IOptions<AppSettings> settings)
         {
@@ -26,6 +27,7 @@ namespace SEI.Desktop
             _settings = settings.Value;
 
             _listaPeritos = new List<Perito>();
+            _listaMarcadores = new List<string>();
 
         }
 
@@ -51,7 +53,13 @@ namespace SEI.Desktop
             }
             try
             {
-                int.Parse(textBoxQuantidade.Text);
+                var quantidadeInt = int.Parse(textBoxQuantidade.Text);
+
+                if (quantidadeInt <= 0)
+                {
+                    MessageBox.Show("Quantidade é informada inválida!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             catch (Exception)
             {
@@ -78,7 +86,6 @@ namespace SEI.Desktop
             finally
             {
                 InicializarComponentes(false, "0");
-
             }
         }
 
@@ -148,7 +155,6 @@ namespace SEI.Desktop
                     progressBar.Value = i;
                 }
 
-
             }
             catch (Exception)
             {
@@ -156,7 +162,8 @@ namespace SEI.Desktop
             }
             finally
             {
-                var row = new string[] { DateTime.Now.ToString(), matricula.ToUpper() + "-" + nome.ToUpper(), marcador.ToUpper(), contadorDeProcessosPassados + "" };
+                textBoxQuantidade.Text = (int.Parse(textBoxQuantidade.Text) - contadorDeProcessosPassados) + "";
+                var row = new string[] { DateTime.Now.ToString(), matricula.ToUpper(), nome.ToUpper(), marcador.ToUpper(), contadorDeProcessosPassados + "" };
                 var lvi = new ListViewItem(row);
                 listView1.Items.Add(lvi);
                 paginaSEI.Fechar();
@@ -166,11 +173,17 @@ namespace SEI.Desktop
         private void MainForm_Load(object sender, EventArgs e)
         {
             CarregarListaPeritos();
+            CarregarListaMarcadores();
 
             comboBoxMatricula.DataSource = _listaPeritos.OrderBy(o => o.Nome).ToList();
 
             comboBoxMatricula.DisplayMember = "Nome";
             comboBoxMatricula.ValueMember = "Matricula";
+
+
+            comboBoxMarcador.DataSource = _listaMarcadores.OrderBy(o => o).ToList();
+
+
         }
 
         private void CarregarListaPeritos()
@@ -198,7 +211,7 @@ namespace SEI.Desktop
                 new Perito() { Nome = "LIVIA", Matricula = "271051X" },
                 new Perito() { Nome = "GUSTAVO", Matricula = "1735144" },
                 new Perito() { Nome = "ALBERTO BRAGA", Matricula = "260082X" },
-                new Perito() { Nome = "MARIA DE LOURDES(MALU)-2696282" },
+                new Perito() { Nome = "MARIA DE LOURDES(MALU)", Matricula = "2696282" },
                 new Perito() { Nome = "PEDRO", Matricula = "1454722" },
                 new Perito() { Nome = "FRANCISCO", Matricula = "2141752" },
                 new Perito() { Nome = "CAMILA", Matricula = "14374390" },
@@ -210,7 +223,7 @@ namespace SEI.Desktop
                 new Perito() { Nome = "JOSE GERALDO", Matricula = "1404466" },
                 new Perito() { Nome = "GIANNA", Matricula = "1737805" },
                 new Perito() { Nome = "ALEXANDRE OMENA", Matricula = "01948075" },
-                new Perito() { Nome = "CLAUDIA", Matricula = "2699907" },
+                new Perito() { Nome = "CLAUDIA MARIA", Matricula = "2699907" },
                 new Perito() { Nome = "ROBERTO FILHO", Matricula = "1749218" },
                 new Perito() { Nome = "SONY", Matricula = "02143488" },
                 new Perito() { Nome = "RONEY NERY", Matricula = "02703661" },
@@ -220,7 +233,7 @@ namespace SEI.Desktop
                 new Perito() { Nome = "YONA", Matricula = "1996568" },
                 new Perito() { Nome = "CLAUDIA NARA", Matricula = "1305352" },
                 new Perito() { Nome = "NILSON", Matricula = "1723324" },
-                new Perito() { Nome = "RICARDO", Matricula = "2710501" },
+                new Perito() { Nome = "RICARDO ANDRADE", Matricula = "2710501" },
                 new Perito() { Nome = "TEREZA", Matricula = "16713435" },
                 new Perito() { Nome = "ABELARDO", Matricula = "1968890" },
                 new Perito() { Nome = "MARCUS", Matricula = "14309319" },
@@ -231,7 +244,7 @@ namespace SEI.Desktop
                 new Perito() { Nome = "GERALDA", Matricula = "2703521" },
                 new Perito() { Nome = "ALEXANDRE GRIPP", Matricula = "2713004" },
                 new Perito() { Nome = "CECILIA", Matricula = "1919539" },
-                new Perito() { Nome = "RICARDO", Matricula = "02143658" },
+                new Perito() { Nome = "RICARDO IBIAPINA", Matricula = "02143658" },
                 new Perito() { Nome = "SIMONE", Matricula = "1654292" },
                 new Perito() { Nome = "MARGARIDA", Matricula = "2733439" },
                 new Perito() { Nome = "ANA LUCIA", Matricula = "2695243" },
@@ -244,7 +257,7 @@ namespace SEI.Desktop
         {
             string filtro = comboBoxMatricula.Text.ToUpper();
 
-            var novaListaPeritosFiltrada = _listaPeritos.FindAll(x => x.Nome.StartsWith(filtro)).OrderBy(o => o.Nome).ToList();
+            var novaListaPeritosFiltrada = _listaPeritos.FindAll(x => x.Nome.Contains(filtro)).OrderBy(o => o.Nome).ToList();
 
             comboBoxMatricula.DataSource = novaListaPeritosFiltrada.OrderBy(o => o.Nome).ToList();
 
@@ -267,6 +280,46 @@ namespace SEI.Desktop
             // set the position of the cursor
             comboBoxMatricula.SelectionStart = filtro.Length;
             comboBoxMatricula.SelectionLength = 0;
+        }
+
+        private void CarregarListaMarcadores()
+        {
+            _listaMarcadores = new List<string>()
+            {
+                "AZUL",
+                "AMARELO",
+                "VERDE",
+                "VERMELHO",
+            };
+        }
+
+        private void comboBoxMarcador_TextUpdate(object sender, EventArgs e)
+        {
+            string filtro = comboBoxMarcador.Text.ToUpper();
+
+            var novaListaPeritosFiltrada = _listaMarcadores.FindAll(x => x.Contains(filtro)).OrderBy(o => o).ToList();
+
+            comboBoxMarcador.DataSource = novaListaPeritosFiltrada.OrderBy(o => o).ToList();
+
+            if (string.IsNullOrWhiteSpace(filtro))
+            {
+                comboBoxMarcador.DataSource = _listaMarcadores.OrderBy(o => o).ToList();
+            }
+
+            comboBoxMarcador.DroppedDown = true;
+            Cursor.Current = Cursors.Default;
+
+            // this will ensure that the drop down is as long as the list
+            comboBoxMarcador.IntegralHeight = true;
+
+            // remove automatically selected first item
+            comboBoxMarcador.SelectedIndex = -1;
+
+            comboBoxMarcador.Text = filtro;
+
+            // set the position of the cursor
+            comboBoxMarcador.SelectionStart = filtro.Length;
+            comboBoxMarcador.SelectionLength = 0;
         }
     }
 }
