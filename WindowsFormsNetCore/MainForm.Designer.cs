@@ -188,11 +188,11 @@
             this.comboBoxMatricula.TabIndex = 11;
             this.comboBoxMatricula.TextUpdate += new System.EventHandler(this.comboBoxMatricula_TextUpdate);
             // 
-            // checkBox1
+            // checkBoxVerNavegador
             // 
             this.checkBoxVerNavegador.AutoSize = true;
             this.checkBoxVerNavegador.Location = new System.Drawing.Point(685, 41);
-            this.checkBoxVerNavegador.Name = "checkBox1";
+            this.checkBoxVerNavegador.Name = "checkBoxVerNavegador";
             this.checkBoxVerNavegador.Size = new System.Drawing.Size(108, 19);
             this.checkBoxVerNavegador.TabIndex = 12;
             this.checkBoxVerNavegador.Text = "Ver Navegador?";
@@ -219,6 +219,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Distribuir Processos - SEI";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,5 +1,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using SEI.Desktop.Models;
 using SEI.Desktop.SeleniumUtils;
@@ -21,7 +22,7 @@ namespace SEI.Desktop.PageObjects
             chromeOptions.AddArgument("--log-level=3");
             chromeOptions.AddArgument("--disable-extensions");
             chromeOptions.AddArgument("test-type");
-            chromeOptions.AddArgument("--ignore-certificate-errors");
+            //chromeOptions.AddArgument("--ignore-certificate-errors");
             chromeOptions.AddArgument("no-sandbox");
 
             if (!visualizarNoNavegador)
@@ -29,11 +30,28 @@ namespace SEI.Desktop.PageObjects
                 chromeOptions.AddArgument("--headless");
             }
 
-            var driverService = ChromeDriverService.CreateDefaultService(System.Reflection.Assembly.GetExecutingAssembly().Location.Split("SEIDesktop.dll")[0]);
-            driverService.HideCommandPromptWindow = true;
+            var chromeDriverService = ChromeDriverService.CreateDefaultService(System.Reflection.Assembly.GetExecutingAssembly().Location.Split("SEIDesktop.dll")[0]);
+            chromeDriverService.HideCommandPromptWindow = true;
 
-            //_driver = new ChromeDriver(appSettings.CaminhoChromeDriver, chromeOptions);
-            _driver = new ChromeDriver(driverService, chromeOptions);
+            _driver = new ChromeDriver(chromeDriverService, chromeOptions);
+
+            //var firefoxOptions = new FirefoxOptions();
+            //firefoxOptions.AddArgument("--log-level=3");
+            //firefoxOptions.AddArgument("--disable-extensions");
+            //firefoxOptions.AddArgument("test-type");
+            ////chromeOptions.AddArgument("--ignore-certificate-errors");
+            ////firefoxOptions.AddArgument("no-sandbox");
+
+            //if (!visualizarNoNavegador)
+            //{
+            //    firefoxOptions.AddArgument("--headless");
+            //}
+
+            //var firefoxDriverService = FirefoxDriverService.CreateDefaultService(System.Reflection.Assembly.GetExecutingAssembly().Location.Split("SEIDesktop.dll")[0]);
+            //firefoxDriverService.HideCommandPromptWindow = true;
+
+            //_driver = new FirefoxDriver(firefoxDriverService, firefoxOptions);
+
         }
         public void CarregarPaginaInicial()
         {
@@ -126,16 +144,20 @@ namespace SEI.Desktop.PageObjects
         public void Credenciar(string nome)
         {
             var jaFoiCredenciado = false;
+            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(6));
 
-            Thread.Sleep(500);
-            _driver.SwitchTo().Frame("ifrVisualizacao").ClickElement(By.CssSelector("#divArvoreAcoes > a:nth-child(2) > img"));
+
+            //Thread.Sleep(1000);
+            //_driver.SwitchTo().Frame("ifrVisualizacao").ClickElement(By.CssSelector("#divArvoreAcoes > a:nth-child(2) > img"));
+
+            _driver.SwitchTo().Frame(1);
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(By.CssSelector("#divArvoreAcoes > a:nth-child(2) > img")));
+            _driver.ClickElement(By.CssSelector("#divArvoreAcoes > a:nth-child(2) > img"));
 
             while (!jaFoiCredenciado)
             {
                 try
                 {
-                    WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(6));
-
                     _driver.FindElement(By.Id("txtUsuario")).Clear();
 
                     _driver.SetText(By.Id("txtUsuario"), nome);
@@ -180,7 +202,6 @@ namespace SEI.Desktop.PageObjects
 
             //var idProcedimento = _driver.FindElement(By.Id("ifrArvore")).GetProperty("src").Split("&id_procedimento=")[1].Substring(0, 8);
 
-            //_driver.SwitchTo().Window(_driver.WindowHandles[0]);
             _driver.SwitchTo().DefaultContent();
 
         }

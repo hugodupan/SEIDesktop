@@ -17,6 +17,7 @@ namespace SEI.Desktop
         private readonly AppSettings _settings;
         private List<Perito> _listaPeritos;
         private List<string> _listaMarcadores;
+        private PaginaSEI _paginaSEI;
 
         public MainForm(IServiceProvider serviceProvider, ISampleService sampleService, IOptions<AppSettings> settings)
         {
@@ -29,6 +30,18 @@ namespace SEI.Desktop
             _listaPeritos = new List<Perito>();
             _listaMarcadores = new List<string>();
 
+            _paginaSEI = new PaginaSEI(_settings, false);
+
+            IniciarNavegacaoELogin();
+        }
+
+        private void IniciarNavegacaoELogin()
+        {
+            _paginaSEI.CarregarPaginaInicial();
+
+            _paginaSEI.EfetuarLogin();
+
+            _paginaSEI.FecharPopUp();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -111,8 +124,20 @@ namespace SEI.Desktop
 
         private void DistribuirProcessos(string matricula, string nome, string marcador, string quantidade)
         {
+            if (_paginaSEI == null)
+            {
+                _paginaSEI = new PaginaSEI(_settings, checkBoxVerNavegador.Checked);
+                IniciarNavegacaoELogin();
+            }
+            else if (checkBoxVerNavegador.Checked)
+            {
+                _paginaSEI.Fechar();
+                _paginaSEI = new PaginaSEI(_settings, true);
 
-            var paginaSEI = new PaginaSEI(_settings, checkBoxVerNavegador.Checked);
+                IniciarNavegacaoELogin();
+            }
+
+
             var marcadorASerEnviado = "roxo";
             labelProgress.Text = progressBar.Value + "/" + quantidade;
 
@@ -120,34 +145,29 @@ namespace SEI.Desktop
 
             try
             {
-                paginaSEI.CarregarPaginaInicial();
-
-                paginaSEI.EfetuarLogin();
-
-                paginaSEI.FecharPopUp();
 
                 for (int i = 1; i <= int.Parse(quantidade); i++)
                 {
-                    paginaSEI.VerPorMarcadores();
+                    _paginaSEI.VerPorMarcadores();
 
-                    var qtdProcessosExistentes = paginaSEI.DetalharProcessosPorMarcador(marcador);
+                    var qtdProcessosExistentes = _paginaSEI.DetalharProcessosPorMarcador(marcador);
 
-                    paginaSEI.IrParaUltimaPagina(qtdProcessosExistentes);
+                    _paginaSEI.IrParaUltimaPagina(qtdProcessosExistentes);
 
-                    paginaSEI.DetalharUltimoProcesso();
+                    _paginaSEI.DetalharUltimoProcesso();
 
-                    paginaSEI.Autenticar();
+                    _paginaSEI.Autenticar();
 
-                    paginaSEI.Credenciar(matricula);
+                    _paginaSEI.Credenciar(matricula);
 
                     if (!marcador.Contains("amarelo"))
                     {
-                        paginaSEI.EnviarParaMarcador(marcadorASerEnviado);
+                        _paginaSEI.EnviarParaMarcador(marcadorASerEnviado);
                     }
 
-                    paginaSEI.Descredenciar();
+                    _paginaSEI.Descredenciar();
 
-                    paginaSEI.IrParaControleProcessos();
+                    _paginaSEI.IrParaControleProcessos();
 
                     contadorDeProcessosPassados++;
 
@@ -158,6 +178,11 @@ namespace SEI.Desktop
             }
             catch (Exception)
             {
+                if (_paginaSEI != null)
+                {
+                    _paginaSEI.Fechar();
+                }
+                _paginaSEI = null;
                 throw;
             }
             finally
@@ -166,7 +191,7 @@ namespace SEI.Desktop
                 var row = new string[] { DateTime.Now.ToString(), matricula.ToUpper(), nome.ToUpper(), marcador.ToUpper(), contadorDeProcessosPassados + "" };
                 var lvi = new ListViewItem(row);
                 listView1.Items.Add(lvi);
-                paginaSEI.Fechar();
+                checkBoxVerNavegador.Checked = false;
             }
         }
 
@@ -320,6 +345,15 @@ namespace SEI.Desktop
             // set the position of the cursor
             comboBoxMarcador.SelectionStart = filtro.Length;
             comboBoxMarcador.SelectionLength = 0;
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (_paginaSEI != null)
+            {
+                _paginaSEI.Fechar();
+            }
+            _paginaSEI = null;
         }
     }
 }
