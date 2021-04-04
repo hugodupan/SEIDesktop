@@ -216,7 +216,6 @@ namespace SEI.Desktop
             _listaPeritos = new List<Perito>
             {
                 new Perito() { Nome = "CLENIA", Matricula = "14306891" },
-                new Perito() { Nome = "ANA PAULA", Matricula = "137303X" },
                 new Perito() { Nome = "ANGELLE", Matricula = "16586255" },
                 new Perito() { Nome = "MARCIA", Matricula = "2710528" },
                 new Perito() { Nome = "GEORGE", Matricula = "2141612" },
@@ -224,7 +223,7 @@ namespace SEI.Desktop
                 new Perito() { Nome = "JULIANA", Matricula = "1860607" },
                 new Perito() { Nome = "MARCELLO", Matricula = "00602710536" },
                 new Perito() { Nome = "HUGO RAFAEL", Matricula = "214347X" },
-                new Perito() { Nome = "ANA BORGES", Matricula = "137303X" },
+                new Perito() { Nome = "ANA PAULA BORGES", Matricula = "137303X" },
                 new Perito() { Nome = "LAIS FRANCA", Matricula = "1452304" },
                 new Perito() { Nome = "ARCHIMEDES", Matricula = "2700468" },
                 new Perito() { Nome = "MARIA FATIMA", Matricula = "02701316" },
@@ -274,7 +273,9 @@ namespace SEI.Desktop
                 new Perito() { Nome = "MARGARIDA", Matricula = "2733439" },
                 new Perito() { Nome = "ANA LUCIA", Matricula = "2695243" },
                 new Perito() { Nome = "CLAUDIO", Matricula = "1311433" },
-                new Perito() { Nome = "CARINA", Matricula = "2143666" }
+                new Perito() { Nome = "CARINA", Matricula = "2143666" },
+                new Perito() { Nome = "ANA PAULA HORTENSIO", Matricula = "2703688" },
+                new Perito() { Nome = "ROBERTA", Matricula = "14307081" }
             };
         }
 

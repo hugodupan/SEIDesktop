@@ -8,8 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="DotNetFX472\**" />
+    <EmbeddedResource Remove="DotNetFX472\**" />
+    <None Remove="DotNetFX472\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="appsettings.json" />
     <None Remove="geckodriver.exe" />
+    <None Remove="NDP472-KB4054530-x86-x64-AllOS-ENU.exe" />
     <None Remove="SeleniumUtils\chromedriver.exe" />
   </ItemGroup>
 
