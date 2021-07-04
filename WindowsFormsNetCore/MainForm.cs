@@ -275,7 +275,14 @@ namespace SEI.Desktop
                 new Perito() { Nome = "CLAUDIO", Matricula = "1311433" },
                 new Perito() { Nome = "CARINA", Matricula = "2143666" },
                 new Perito() { Nome = "ANA PAULA HORTENSIO", Matricula = "2703688" },
-                new Perito() { Nome = "ROBERTA", Matricula = "14307081" }
+                new Perito() { Nome = "ROBERTA", Matricula = "14307081" },
+                new Perito() { Nome = "ROSYLANE", Matricula = "1628291" },
+                new Perito() { Nome = "MARCELO FURTADO", Matricula = "1654241" },
+                new Perito() { Nome = "CASSIO", Matricula = "2794276" },
+                new Perito() { Nome = "LUCIANO", Matricula = "279439X" },
+                new Perito() { Nome = "AMANDA SOFIA", Matricula = "2794462" },
+                new Perito() { Nome = "AURELIO", Matricula = "2794527" },
+                new Perito() { Nome = "PATRICIA", Matricula = "2744225" }
             };
         }
 
