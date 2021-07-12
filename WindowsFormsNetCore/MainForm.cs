@@ -160,7 +160,7 @@ namespace SEI.Desktop
 
                     _paginaSEI.Credenciar(matricula);
 
-                    if (!marcador.Contains("amarelo"))
+                    if (!marcador.Contains("amarelo") && !marcador.Contains("vermelho"))
                     {
                         _paginaSEI.EnviarParaMarcador(marcadorASerEnviado);
                     }
@@ -282,7 +282,12 @@ namespace SEI.Desktop
                 new Perito() { Nome = "LUCIANO", Matricula = "279439X" },
                 new Perito() { Nome = "AMANDA SOFIA", Matricula = "2794462" },
                 new Perito() { Nome = "AURELIO", Matricula = "2794527" },
-                new Perito() { Nome = "PATRICIA", Matricula = "2744225" }
+                new Perito() { Nome = "PATRICIA", Matricula = "2744225" },
+                new Perito() { Nome = "FERNANDA NAZARETH", Matricula = "2794640" },
+                new Perito() { Nome = "HELOISA", Matricula = "2794632" },
+                new Perito() { Nome = "MIRIAM", Matricula = "2794489" },
+                new Perito() { Nome = "JESSICA", Matricula = "2794756" },
+                new Perito() { Nome = "LARISSA", Matricula = "2794861" }
             };
         }
 
