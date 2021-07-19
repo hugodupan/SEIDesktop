@@ -111,6 +111,8 @@ namespace SEI.Desktop.PageObjects
                 }
             }
 
+            numeroProcessos = numeroProcessos.Replace(".", "");
+
             return int.Parse(numeroProcessos);
         }
         public void VerPorMarcadores()
